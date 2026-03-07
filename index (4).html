@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Meriem Mellouki — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --pink:#FF2D7A;--pink-soft:#FF6BA8;--pink-pale:#FFE8F2;--pink-ultra:#FFF0F7;
+  --white:#FFFFFF;--cream:#FDF8FB;--dark:#1A0A12;--mid:#6B3A55;--gray:#9B7A8A;--border:#F0D6E4;
+  --fd:'Playfair Display',serif;--fb:'Jost',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--dark);font-family:var(--fb);font-weight:300;overflow-x:hidden;cursor:none}
+::selection{background:var(--pink);color:#fff}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:var(--pink);border-radius:2px}::-webkit-scrollbar-track{background:var(--cream)}
+
+/* CURSOR */
+#dot{position:fixed;width:10px;height:10px;background:var(--pink);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:multiply;transition:transform .15s}
+#ring{position:fixed;width:34px;height:34px;border:1.5px solid var(--pink-soft);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .25s,height .25s,border-color .25s,background .25s}
+body.hv #ring{width:52px;height:52px;background:rgba(255,45,122,.07)}
+body.hv #dot{transform:translate(-50%,-50%) scale(1.5)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.8rem 5rem;transition:all .4s}
+nav.s{background:rgba(255,255,255,.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:1.1rem 5rem;box-shadow:0 4px 30px rgba(255,45,122,.06)}
+.nlogo{font-family:var(--fd);font-size:1.2rem;font-weight:700;color:var(--dark);text-decoration:none;letter-spacing:.04em}
+.nlogo span{color:var(--pink)}
+.nav-right{display:flex;align-items:center;gap:1.2rem}
+.nlinks{display:flex;gap:2rem;list-style:none}
+.nlinks a{font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color .25s;position:relative}
+.nlinks a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1.5px;background:var(--pink);transform:scaleX(0);transition:transform .25s;transform-origin:left}
+.nlinks a:hover,.nlinks a.active{color:var(--pink)}
+.nlinks a:hover::after,.nlinks a.active::after{transform:scaleX(1)}
+/* LANG SWITCHER */
+.lang-toggle{display:flex;align-items:center;background:var(--cream);border:1.5px solid var(--border);border-radius:100px;padding:.2rem;gap:.1rem}
+.lang-btn{font-size:.6rem;font-weight:600;letter-spacing:.1em;padding:.3rem .75rem;border-radius:100px;border:none;background:transparent;color:var(--gray);cursor:none;transition:all .22s}
+.lang-btn.active{background:var(--pink);color:#fff;box-shadow:0 2px 8px rgba(255,45,122,.3)}
+.ncta{font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;padding:.5rem 1.4rem;background:var(--pink);color:#fff;text-decoration:none;border-radius:100px;transition:background .25s,transform .2s;font-weight:500}
+.ncta:hover{background:var(--dark);transform:translateY(-2px)}
+
+/* BACK TO TOP */
+#btt{position:fixed;bottom:2.5rem;right:2.5rem;width:44px;height:44px;background:var(--pink);border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.1rem;cursor:none;z-index:100;opacity:0;transform:translateY(12px);transition:opacity .3s,transform .3s,background .25s;box-shadow:0 4px 20px rgba(255,45,122,.35)}
+#btt.vis{opacity:1;transform:none}
+#btt:hover{background:var(--dark)}
+
+/* HERO */
+#hero{min-height:100vh;background:var(--cream);display:grid;grid-template-columns:1.1fr .9fr;align-items:center;position:relative;overflow:hidden}
+.hero-blob{position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(255,45,122,.1) 0%,rgba(255,107,168,.05) 50%,transparent 70%);top:50%;right:0;transform:translateY(-50%);pointer-events:none}
+.hero-blob2{position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(255,232,242,.8) 0%,transparent 70%);bottom:-100px;left:-100px;pointer-events:none}
+.hero-dots{position:absolute;top:8rem;right:45%;width:120px;height:120px;background-image:radial-gradient(var(--border) 1.5px,transparent 1.5px);background-size:12px 12px;opacity:.6}
+.hero-left{padding:0 4rem 0 5rem;position:relative;z-index:2}
+.hero-kicker{display:flex;align-items:center;gap:.9rem;margin-bottom:2rem;opacity:0;animation:up .7s .2s forwards}
+.hero-kicker-line{width:32px;height:2px;background:var(--pink);border-radius:1px}
+.hero-kicker-text{font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:var(--pink);font-weight:500}
+.hero-h1{font-family:var(--fd);font-size:clamp(3.8rem,6vw,6.5rem);font-weight:900;line-height:.92;letter-spacing:-.02em;color:var(--dark);margin-bottom:.6rem;opacity:0;animation:up .8s .35s forwards}
+.hero-h1 .italic{font-style:italic;color:var(--pink);display:block}
+.hero-h1 .light{font-weight:400;display:block}
+.hero-desc{font-size:1rem;color:var(--gray);line-height:1.9;max-width:420px;margin:2rem 0 2.8rem;opacity:0;animation:up .7s .6s forwards}
+.hero-desc strong{color:var(--dark);font-weight:500}
+.hero-langs{display:flex;gap:.7rem;flex-wrap:wrap;margin-bottom:3rem;opacity:0;animation:up .7s .72s forwards}
+.lang-badge{display:flex;flex-direction:column;align-items:center;padding:.6rem 1.1rem;border:1.5px solid var(--border);border-radius:8px;transition:all .25s;background:var(--white)}
+.lang-badge:hover{border-color:var(--pink);box-shadow:0 4px 16px rgba(255,45,122,.1);transform:translateY(-2px)}
+.lang-name{font-size:.75rem;font-weight:600;color:var(--dark);letter-spacing:.06em}
+.lang-level{font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--pink);margin-top:.15rem}
+.hero-cta{display:flex;gap:1rem;opacity:0;animation:up .7s .85s forwards}
+.btn-pink{padding:.9rem 2.2rem;background:var(--pink);color:#fff;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;font-weight:500;border-radius:100px;transition:all .25s}
+.btn-pink:hover{background:var(--dark);transform:translateY(-3px);box-shadow:0 8px 24px rgba(255,45,122,.3)}
+.btn-ghost{padding:.9rem 2.2rem;border:1.5px solid var(--border);color:var(--mid);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;border-radius:100px;transition:all .25s}
+.btn-ghost:hover{border-color:var(--pink);color:var(--pink);transform:translateY(-3px)}
+.hero-right{position:relative;height:100vh;display:flex;align-items:center;justify-content:center}
+.photo-wrap{position:relative;width:380px;height:480px}
+.photo-bg-shape{position:absolute;inset:-20px;background:var(--pink-pale);border-radius:60% 40% 55% 45% / 45% 55% 45% 55%;animation:morph 8s ease-in-out infinite}
+@keyframes morph{0%,100%{border-radius:60% 40% 55% 45% / 45% 55% 45% 55%}33%{border-radius:45% 55% 40% 60% / 55% 45% 60% 40%}66%{border-radius:55% 45% 60% 40% / 40% 60% 45% 55%}}
+.photo-inner{position:absolute;inset:0;border-radius:60% 40% 55% 45% / 45% 55% 45% 55%;overflow:hidden;animation:morph 8s ease-in-out infinite;background:var(--pink-pale);display:flex;align-items:center;justify-content:center}
+.photo-inner img{width:100%;height:100%;object-fit:cover;object-position:top center}
+.photo-placeholder-content{display:flex;flex-direction:column;align-items:center;gap:1rem}
+.photo-placeholder-content .photo-emoji{font-size:4rem}
+.photo-placeholder-content .photo-label{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--pink);opacity:.7;text-align:center}
+.photo-badge{position:absolute;bottom:-1rem;right:-2rem;background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:.9rem 1.4rem;box-shadow:0 8px 32px rgba(255,45,122,.12)}
+.photo-badge-num{font-family:var(--fd);font-size:1.8rem;font-weight:900;color:var(--pink);line-height:1}
+.photo-badge-label{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);margin-top:.15rem}
+.photo-badge2{position:absolute;top:1rem;left:-3rem;background:var(--pink);border-radius:12px;padding:.75rem 1.2rem;box-shadow:0 6px 20px rgba(255,45,122,.3)}
+.photo-badge2-text{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#fff;font-weight:500}
+.photo-badge2-sub{font-size:.55rem;color:rgba(255,255,255,.7);margin-top:.1rem}
+
+/* SECTION SHARED */
+section{padding:7rem 5rem}
+.sec-kicker{display:flex;align-items:center;gap:.7rem;font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--pink);font-weight:500;margin-bottom:1rem}
+.sec-kicker::before{content:'';width:16px;height:2px;background:var(--pink);border-radius:1px}
+.sec-title{font-family:var(--fd);font-size:clamp(2.5rem,4.5vw,4.2rem);font-weight:900;line-height:1;color:var(--dark);margin-bottom:4rem}
+.sec-title em{font-style:italic;color:var(--pink)}
+.sec-title .outline{-webkit-text-stroke:1.5px var(--pink);color:transparent}
+
+/* ABOUT */
+#about{background:var(--white)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
+.about-tagline{font-family:var(--fd);font-size:clamp(2rem,3.2vw,2.8rem);font-weight:900;line-height:1.1;color:var(--dark);margin-bottom:2rem}
+.about-tagline em{font-style:italic;color:var(--pink)}
+.about-text{font-size:.93rem;color:var(--gray);line-height:1.95;margin-bottom:1.4rem}
+.about-text strong{color:var(--dark);font-weight:500}
+.about-values{display:flex;flex-direction:column;gap:.75rem;margin-top:2.5rem}
+.about-val{display:flex;align-items:flex-start;gap:1rem;padding:.9rem 1.2rem;background:var(--cream);border-radius:10px;border:1px solid var(--border);transition:all .25s}
+.about-val:hover{border-color:var(--pink);transform:translateX(6px);box-shadow:0 4px 16px rgba(255,45,122,.07)}
+.about-val-icon{font-size:1.2rem;flex-shrink:0;margin-top:.1rem}
+.about-val-text{font-size:.82rem;color:var(--mid);line-height:1.5}
+.about-val-text strong{display:block;color:var(--dark);font-weight:600;font-size:.85rem;margin-bottom:.2rem}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:2.5rem}
+.about-stat{padding:2rem 1.8rem;background:var(--cream);border-radius:16px;border:1.5px solid var(--border);text-align:center;transition:all .3s}
+.about-stat:hover{border-color:var(--pink);box-shadow:0 8px 28px rgba(255,45,122,.08);transform:translateY(-3px)}
+.about-stat-num{font-family:var(--fd);font-size:2.5rem;font-weight:900;color:var(--pink);line-height:1}
+.about-stat-label{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);margin-top:.4rem}
+.about-quote{padding:2rem 2.2rem;background:var(--dark);border-radius:16px;position:relative;overflow:hidden}
+.about-quote::before{content:'\201C';font-family:var(--fd);font-size:7rem;font-weight:900;color:var(--pink);opacity:.18;position:absolute;top:-1.5rem;left:1rem;line-height:1;pointer-events:none}
+.about-quote-text{font-family:var(--fd);font-size:1rem;font-style:italic;color:var(--white);line-height:1.65;position:relative;z-index:1}
+.about-quote-author{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--pink);margin-top:1rem;font-weight:500}
+
+/* FORMATION */
+#formation{background:var(--cream)}
+.timeline{position:relative;margin-top:1rem}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--pink) 0%,var(--border) 100%);border-radius:1px}
+.tl-item{position:relative;padding:0 0 3.5rem 3rem}
+.tl-item:last-child{padding-bottom:0}
+.tl-dot{position:absolute;left:-5px;top:4px;width:12px;height:12px;background:var(--pink);border-radius:50%;box-shadow:0 0 0 4px var(--pink-pale)}
+.tl-item.minor .tl-dot{width:8px;height:8px;left:-3px;background:var(--border);box-shadow:none}
+.tl-period{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--pink);font-weight:500;margin-bottom:.5rem}
+.tl-title{font-family:var(--fd);font-size:1.2rem;font-weight:700;color:var(--dark);margin-bottom:.25rem;line-height:1.2}
+.tl-item.minor .tl-title{font-size:.98rem}
+.tl-school{font-size:.82rem;color:var(--mid);font-weight:500;margin-bottom:.6rem}
+.tl-desc{font-size:.83rem;color:var(--gray);line-height:1.75;max-width:620px}
+.tl-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.8rem}
+.tl-tag{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .75rem;background:var(--white);color:var(--mid);border:1px solid var(--border);border-radius:100px;font-weight:500}
+
+/* LANGUAGES */
+#languages{background:var(--dark)}
+.lang-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:1rem}
+.lang-card{padding:3rem 2.5rem;border:1px solid rgba(255,45,122,.15);position:relative;overflow:hidden;transition:all .35s}
+.lang-card:hover{border-color:var(--pink);transform:translateY(-6px);background:rgba(255,45,122,.04)}
+.lang-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--pink),var(--pink-soft));transform:scaleX(0);transition:transform .4s;transform-origin:left}
+.lang-card:hover::after{transform:scaleX(1)}
+.lang-flag{font-size:2.8rem;margin-bottom:1.5rem;display:block}
+.lang-card-name{font-family:var(--fd);font-size:2rem;font-weight:700;color:var(--white);margin-bottom:.4rem}
+.lang-card-level{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--pink);margin-bottom:1.5rem;font-weight:500}
+.lang-card-desc{font-size:.83rem;color:rgba(255,255,255,.45);line-height:1.75}
+.lang-dots{display:flex;gap:.4rem;margin-top:1.5rem}
+.ldot{width:8px;height:8px;border-radius:50%;background:rgba(255,45,122,.2)}
+.ldot.filled{background:var(--pink)}
+
+/* PROJECTS */
+#projects{background:var(--white)}
+.proj-list{display:flex;flex-direction:column;gap:2px}
+.proj-item{display:grid;grid-template-columns:80px 1fr auto;align-items:center;gap:3rem;padding:2.5rem 3rem;background:var(--cream);border-bottom:1px solid var(--border);transition:all .3s;cursor:none}
+.proj-item:hover{background:var(--pink-ultra);border-color:transparent;transform:translateX(8px)}
+.proj-item:hover .proj-arrow-icon{background:var(--pink);color:#fff;border-color:var(--pink)}
+.proj-n{font-family:var(--fd);font-size:3.5rem;font-weight:900;color:var(--border);line-height:1;transition:color .3s}
+.proj-item:hover .proj-n{color:var(--pink-pale)}
+.proj-cat-tag{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--pink);font-weight:500;margin-bottom:.5rem}
+.proj-name{font-family:var(--fd);font-size:1.35rem;font-weight:700;color:var(--dark);margin-bottom:.5rem}
+.proj-detail{font-size:.83rem;color:var(--gray);line-height:1.75;max-width:680px;margin-bottom:1rem}
+.proj-pills{display:flex;flex-wrap:wrap;gap:.35rem}
+.ppill{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .75rem;background:var(--pink-pale);color:var(--pink);border-radius:100px;font-weight:500}
+.proj-arrow-icon{width:44px;height:44px;border:1.5px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gray);font-size:.9rem;transition:all .3s;flex-shrink:0}
+
+/* CERTIFICATIONS */
+#certifications{background:var(--cream)}
+.certs-masonry{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.cert-c{padding:2.2rem 2.5rem;border:1.5px solid var(--border);border-radius:16px;transition:all .3s;position:relative;overflow:hidden;background:var(--white)}
+.cert-c:hover{border-color:var(--pink);box-shadow:0 12px 40px rgba(255,45,122,.1);transform:translateY(-4px)}
+.cert-c::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--pink),var(--pink-soft));transform:scaleX(0);transition:transform .4s;transform-origin:left}
+.cert-c:hover::before{transform:scaleX(1)}
+.cert-c-head{display:flex;align-items:center;gap:1.2rem;margin-bottom:1.2rem}
+.cert-c-logo{width:44px;height:44px;min-width:44px;background:var(--pink-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:700;color:var(--pink);letter-spacing:.04em;text-align:center;line-height:1.25}
+.cert-c-issuer{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--pink);font-weight:500}
+.cert-c-date{font-size:.7rem;color:var(--gray);margin-top:.1rem}
+.cert-c-title{font-family:var(--fd);font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:.5rem;line-height:1.3}
+.cert-c-desc{font-size:.8rem;color:var(--gray);line-height:1.65;margin-bottom:.9rem}
+.cert-c-id{display:inline-block;font-size:.56rem;letter-spacing:.12em;padding:.28rem .8rem;background:var(--cream);border:1px solid var(--border);color:var(--gray);border-radius:100px;font-family:monospace}
+
+/* SKILLS */
+#skills{background:var(--pink-ultra)}
+.skills-inner{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2.5rem;margin-top:1rem}
+.sg{padding:2.5rem;background:var(--white);border-radius:20px;border:1.5px solid var(--border);transition:all .3s}
+.sg:hover{border-color:var(--pink);box-shadow:0 12px 40px rgba(255,45,122,.08);transform:translateY(-4px)}
+.sg-icon{font-size:2rem;margin-bottom:1.2rem;display:block}
+.sg-title{font-family:var(--fd);font-size:1.2rem;font-weight:700;color:var(--dark);margin-bottom:1.5rem}
+.sg-pills{display:flex;flex-wrap:wrap;gap:.4rem}
+.sgp{font-size:.68rem;font-weight:500;padding:.38rem .9rem;border-radius:100px;transition:all .25s;cursor:default}
+.sgp-f{background:var(--pink);color:#fff}.sgp-f:hover{background:var(--dark)}
+.sgp-m{background:var(--pink-pale);color:var(--pink)}.sgp-m:hover{background:var(--pink);color:#fff}
+.sgp-l{background:var(--cream);color:var(--mid);border:1px solid var(--border)}.sgp-l:hover{border-color:var(--pink);color:var(--pink)}
+
+/* CONTACT */
+#contact{background:var(--dark);position:relative;overflow:hidden;text-align:center}
+.contact-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(255,45,122,.15) 0%,transparent 65%);pointer-events:none}
+.contact-inner{position:relative;z-index:2;max-width:700px;margin:0 auto}
+.contact-kicker{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--pink);font-weight:500;display:flex;align-items:center;justify-content:center;gap:.7rem;margin-bottom:2rem}
+.contact-kicker::before,.contact-kicker::after{content:'';width:16px;height:2px;background:var(--pink);border-radius:1px}
+.contact-h{font-family:var(--fd);font-size:clamp(3rem,6vw,6.5rem);font-weight:900;line-height:.92;color:var(--white);margin-bottom:1.5rem}
+.contact-h em{font-style:italic;color:var(--pink)}
+.contact-sub{font-size:.9rem;color:rgba(255,255,255,.4);line-height:1.9;margin-bottom:3.5rem;max-width:480px;margin-left:auto;margin-right:auto}
+.contact-row{display:flex;justify-content:center;gap:.9rem;flex-wrap:wrap}
+.cl{display:flex;align-items:center;gap:.6rem;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:#fff;text-decoration:none;padding:.8rem 1.6rem;border:1.5px solid rgba(255,255,255,.15);border-radius:100px;transition:all .3s;font-weight:500;white-space:nowrap}
+.cl:hover{border-color:var(--pink);background:var(--pink);transform:translateY(-3px);box-shadow:0 8px 24px rgba(255,45,122,.35)}
+.cl svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;flex-shrink:0}
+
+footer{background:#0d0007;padding:2rem 5rem;display:flex;justify-content:space-between;align-items:center}
+.flogo{font-family:var(--fd);font-size:1rem;font-weight:700;color:var(--pink)}
+.fcopy{font-size:.65rem;letter-spacing:.1em;color:rgba(255,255,255,.2)}
+
+/* ANIM */
+@keyframes up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s cubic-bezier(.4,0,.2,1),transform .65s cubic-bezier(.4,0,.2,1)}
+.reveal.on{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* RESPONSIVE */
+@media(max-width:1200px){
+  nav,nav.s{padding:1.2rem 2.5rem}
+  .nlinks{gap:1.4rem}
+}
+@media(max-width:1100px){
+  section{padding:5rem 2.5rem}
+  #hero{grid-template-columns:1fr;padding-top:6rem}
+  .hero-left{padding:4rem 2.5rem}
+  .hero-right{display:none}
+  .about-grid{grid-template-columns:1fr;gap:3rem}
+  .lang-grid{grid-template-columns:1fr 1fr}
+  .proj-item{grid-template-columns:60px 1fr auto;gap:1.5rem;padding:2rem}
+  .certs-masonry{grid-template-columns:1fr}
+  .skills-inner{grid-template-columns:1fr 1fr}
+  footer{padding:1.5rem 2.5rem}
+}
+@media(max-width:768px){
+  nav,nav.s{padding:1rem 1.5rem}
+  .nlinks{display:none}
+  section{padding:4rem 1.5rem}
+  .about-stats{grid-template-columns:1fr 1fr}
+  .lang-grid{grid-template-columns:1fr}
+  .skills-inner{grid-template-columns:1fr}
+  .proj-item{grid-template-columns:1fr;gap:1rem}
+  .proj-n,.proj-arrow-icon{display:none}
+  #btt{bottom:1.5rem;right:1.5rem}
+  .contact-row{flex-direction:column;align-items:center}
+  footer{padding:1.5rem}
+}
+</style>
+</head>
+<body>
+<div id="dot"></div>
+<div id="ring"></div>
+<button id="btt" aria-label="Retour en haut">↑</button>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nlogo">Meriem <span>.</span></a>
+  <ul class="nlinks">
+    <li><a href="#about"   data-fr="À propos"      data-en="About">À propos</a></li>
+    <li><a href="#formation" data-fr="Formation"   data-en="Education">Formation</a></li>
+    <li><a href="#languages" data-fr="Langues"     data-en="Languages">Langues</a></li>
+    <li><a href="#projects"  data-fr="Projets"     data-en="Projects">Projets</a></li>
+    <li><a href="#certifications" data-fr="Certifs" data-en="Certs">Certifs</a></li>
+    <li><a href="#skills"    data-fr="Compétences" data-en="Skills">Compétences</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-toggle" role="group" aria-label="Langue / Language">
+      <button class="lang-btn active" id="btn-fr">FR</button>
+      <button class="lang-btn"        id="btn-en">EN</button>
+    </div>
+    <a href="mailto:meriem.mellouki@student-cs.fr" class="ncta"
+       data-fr="Me contacter" data-en="Contact me">Me contacter</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-blob"></div><div class="hero-blob2"></div><div class="hero-dots"></div>
+  <div class="hero-left">
+    <div class="hero-kicker">
+      <div class="hero-kicker-line"></div>
+      <div class="hero-kicker-text"
+           data-fr="Ingénieure · Data &amp; Optimisation"
+           data-en="Engineer · Data &amp; Optimisation">Ingénieure · Data &amp; Optimisation</div>
+    </div>
+    <h1 class="hero-h1">
+      <span class="light" data-fr="Bonjour, je suis" data-en="Hello, I am">Bonjour, je suis</span>
+      <span>MERIEM</span>
+      <span class="italic">Mellouki</span>
+    </h1>
+    <p class="hero-desc"
+       data-fr="Élève-ingénieure à <strong>Centrale Casablanca</strong>, en mobilité S8 à <strong>CentraleSupélec</strong>. Je transforme des données complexes en décisions claires — entre optimisation, IA et performance industrielle."
+       data-en="Engineering student at <strong>Centrale Casablanca</strong>, on exchange at <strong>CentraleSupélec</strong>. I turn complex data into clear decisions — across optimisation, AI and industrial performance.">
+      Élève-ingénieure à <strong>Centrale Casablanca</strong>, en mobilité S8 à <strong>CentraleSupélec</strong>. Je transforme des données complexes en décisions claires — entre optimisation, IA et performance industrielle.
+    </p>
+    <div class="hero-langs">
+      <div class="lang-badge"><span class="lang-name">🇫🇷 Français</span><span class="lang-level">C1 — Courant</span></div>
+      <div class="lang-badge"><span class="lang-name">🇬🇧 English</span><span class="lang-level">B2 — Advanced</span></div>
+      <div class="lang-badge"><span class="lang-name">🇲🇦 عربي</span><span class="lang-level" data-fr="Natif" data-en="Native">Natif</span></div>
+    </div>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-pink" data-fr="Voir mes projets →" data-en="See my projects →">Voir mes projets →</a>
+      <a href="#about"    class="btn-ghost" data-fr="En savoir plus" data-en="Learn more">En savoir plus</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="photo-wrap">
+      <div class="photo-bg-shape"></div>
+      <div class="photo-inner">
+        <!-- Pour ajouter votre photo : remplacez le bloc ci-dessous par <img src="photo.jpg" alt="Meriem Mellouki"/> -->
+        
+        <img src="photo.jpg" width="200">
+      <div class="photo-badge">
+        <div class="photo-badge-num">5</div>
+        <div class="photo-badge-label" data-fr="Certifications" data-en="Certifications">Certifications</div>
+      </div>
+      <div class="photo-badge2">
+        <div class="photo-badge2-text" data-fr="Stage · Sept 2026" data-en="Intern · Sept 2026">Stage · Sept 2026</div>
+        <div class="photo-badge2-sub"  data-fr="Disponible 6 mois" data-en="Available 6 months">Disponible 6 mois</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="sec-kicker reveal" data-fr="À propos" data-en="About me">À propos</div>
+  <div class="sec-title reveal">
+    <span data-fr="Qui <em>suis-je</em>&nbsp;?" data-en="Who <em>am I</em>?">Qui <em>suis-je</em>&nbsp;?</span>
+  </div>
+  <div class="about-grid">
+    <div class="about-left">
+      <div class="about-tagline reveal"
+           data-fr="Donnée. Rigueur.<br><em>Impact.</em>"
+           data-en="Data. Rigour.<br><em>Impact.</em>">Donnée. Rigueur.<br><em>Impact.</em></div>
+      <p class="about-text reveal"
+         data-fr="Je suis <strong>Meriem Mellouki</strong>, élève-ingénieure marocaine en double cursus entre <strong>Centrale Casablanca</strong> et <strong>CentraleSupélec Paris-Saclay</strong>. Passionnée par la jonction entre la rigueur mathématique et les enjeux concrets du terrain, je me spécialise dans la data science, l'optimisation et l'intelligence artificielle appliquée à l'industrie."
+         data-en="I am <strong>Meriem Mellouki</strong>, a Moroccan engineering student on a dual programme between <strong>Centrale Casablanca</strong> and <strong>CentraleSupélec Paris-Saclay</strong>. Passionate about bridging mathematical rigour with real-world challenges, I specialise in data science, optimisation, and AI applied to industry.">
+        Je suis <strong>Meriem Mellouki</strong>, élève-ingénieure marocaine en double cursus entre <strong>Centrale Casablanca</strong> et <strong>CentraleSupélec Paris-Saclay</strong>. Passionnée par la jonction entre la rigueur mathématique et les enjeux concrets du terrain, je me spécialise dans la data science, l'optimisation et l'intelligence artificielle appliquée à l'industrie.
+      </p>
+      <p class="about-text reveal"
+         data-fr="Mon parcours m'a amenée à travailler sur des projets variés : optimisation de flotte aérienne avec <strong>Gurobi</strong>, classification de nuages de points RADAR par <strong>deep learning</strong>, construction de dashboards <strong>Power BI</strong> pour la Banque Mondiale, et amélioration continue en <strong>usine</strong>. J'aime la diversité des problèmes et la satisfaction de trouver des solutions actionnables."
+         data-en="My journey has taken me through diverse projects: airline fleet optimisation with <strong>Gurobi</strong>, RADAR point cloud classification using <strong>deep learning</strong>, <strong>Power BI</strong> dashboard design for the World Bank, and <strong>shop-floor</strong> continuous improvement. I thrive on varied problems and the satisfaction of finding actionable solutions.">
+        Mon parcours m'a amenée à travailler sur des projets variés : optimisation de flotte aérienne avec <strong>Gurobi</strong>, classification de nuages de points RADAR par <strong>deep learning</strong>, construction de dashboards <strong>Power BI</strong> pour la Banque Mondiale, et amélioration continue en <strong>usine</strong>. J'aime la diversité des problèmes et la satisfaction de trouver des solutions actionnables.
+      </p>
+      <p class="about-text reveal"
+         data-fr="Je suis actuellement à la recherche d'un <strong>stage de fin d'études de 6 mois</strong> à partir de septembre 2026, dans les domaines de l'analyse de données, du conseil stratégique, de la qualité ou de l'optimisation industrielle — idéalement dans un contexte international stimulant."
+         data-en="I am currently seeking a <strong>6-month end-of-studies internship</strong> starting September 2026, in data analytics, strategic consulting, quality engineering, or industrial optimisation — ideally in a stimulating international setting.">
+        Je suis actuellement à la recherche d'un <strong>stage de fin d'études de 6 mois</strong> à partir de septembre 2026, dans les domaines de l'analyse de données, du conseil stratégique, de la qualité ou de l'optimisation industrielle — idéalement dans un contexte international stimulant.
+      </p>
+      <div class="about-values reveal">
+        <div class="about-val">
+          <span class="about-val-icon">🎯</span>
+          <div class="about-val-text">
+            <strong data-fr="Orientée résultats" data-en="Results-driven">Orientée résultats</strong>
+            <span data-fr="Je traduis chaque analyse en recommandations concrètes et actionnables." data-en="I translate every analysis into concrete, actionable recommendations.">Je traduis chaque analyse en recommandations concrètes et actionnables.</span>
+          </div>
+        </div>
+        <div class="about-val">
+          <span class="about-val-icon">🌍</span>
+          <div class="about-val-text">
+            <strong data-fr="Vision internationale" data-en="International mindset">Vision internationale</strong>
+            <span data-fr="Marocaine à Paris, formée dans deux grandes écoles, à l'aise en 3 langues." data-en="Moroccan in Paris, trained at two top engineering schools, comfortable in 3 languages.">Marocaine à Paris, formée dans deux grandes écoles, à l'aise en 3 langues.</span>
+          </div>
+        </div>
+        <div class="about-val">
+          <span class="about-val-icon">🔬</span>
+          <div class="about-val-text">
+            <strong data-fr="Curiosité intellectuelle" data-en="Intellectual curiosity">Curiosité intellectuelle</strong>
+            <span data-fr="Apprentissage continu, certifications régulières et participation à des événements académiques." data-en="Continuous learning, regular certifications, and participation in academic events.">Apprentissage continu, certifications régulières et participation à des événements académiques.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="about-right">
+      <div class="about-stats reveal">
+        <div class="about-stat">
+          <div class="about-stat-num">6</div>
+          <div class="about-stat-label" data-fr="Projets majeurs" data-en="Major projects">Projets majeurs</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num">5</div>
+          <div class="about-stat-label" data-fr="Certifications" data-en="Certifications">Certifications</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num">3</div>
+          <div class="about-stat-label" data-fr="Langues parlées" data-en="Languages spoken">Langues parlées</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num">2</div>
+          <div class="about-stat-label" data-fr="Grandes écoles" data-en="Top engineering schools">Grandes écoles</div>
+        </div>
+      </div>
+      <div class="about-quote reveal d1">
+        <div class="about-quote-text"
+             data-fr="Les données ne parlent pas d'elles-mêmes. Elles ont besoin d'un ingénieur pour leur donner du sens — et d'une vision pour en faire quelque chose."
+             data-en="Data doesn't speak for itself. It needs an engineer to give it meaning — and a vision to turn it into something.">
+          Les données ne parlent pas d'elles-mêmes. Elles ont besoin d'un ingénieur pour leur donner du sens — et d'une vision pour en faire quelque chose.
+        </div>
+        <div class="about-quote-author">— Meriem Mellouki</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMATION -->
+<section id="formation">
+  <div class="sec-kicker reveal" data-fr="Parcours" data-en="Journey">Parcours</div>
+  <div class="sec-title reveal"><span data-fr="Ma <em>formation</em>" data-en="My <em>education</em>">Ma <em>formation</em></span></div>
+  <div class="timeline">
+
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-period" data-fr="2025 — Présent · Semestre S8" data-en="2025 — Present · Semester S8">2025 — Présent · Semestre S8</div>
+      <div class="tl-title" data-fr="Mobilité académique — CentraleSupélec" data-en="Exchange semester — CentraleSupélec">Mobilité académique — CentraleSupélec</div>
+      <div class="tl-school">Université Paris-Saclay · Gif-sur-Yvette, France</div>
+      <div class="tl-desc"
+           data-fr="Semestre d'échange au sein de l'une des meilleures écoles d'ingénieurs françaises. Cours spécialisés en machine learning, traitement du signal, optimisation et systèmes décisionnels. Projet de classification de nuages de points RADAR (deep learning)."
+           data-en="Exchange semester at one of France's top engineering schools. Specialised coursework in machine learning, signal processing, optimisation, and decision systems. RADAR point cloud classification project using deep learning.">
+        Semestre d'échange au sein de l'une des meilleures écoles d'ingénieurs françaises. Cours spécialisés en machine learning, traitement du signal, optimisation et systèmes décisionnels.
+      </div>
+      <div class="tl-tags"><span class="tl-tag">Deep Learning</span><span class="tl-tag">Signal Processing</span><span class="tl-tag">Optimisation</span><span class="tl-tag">Research</span></div>
+    </div>
+
+    <div class="tl-item reveal d1">
+      <div class="tl-dot"></div>
+      <div class="tl-period" data-fr="2022 — Présent" data-en="2022 — Present">2022 — Présent</div>
+      <div class="tl-title" data-fr="Cycle Ingénieur — École Centrale Casablanca" data-en="Engineering Degree — École Centrale Casablanca">Cycle Ingénieur — École Centrale Casablanca</div>
+      <div class="tl-school">Casablanca, Maroc</div>
+      <div class="tl-desc"
+           data-fr="Formation d'excellence en ingénierie généraliste avec spécialisation progressive en data science, optimisation et IA appliquée à l'industrie. Participation au projet « Learning by Doing » — système de méthanisation intelligent."
+           data-en="Broad engineering education with progressive specialisation in data science, optimisation, and industrial AI. Participation in the 'Learning by Doing' project — intelligent biogas system design.">
+        Formation d'excellence en ingénierie généraliste avec spécialisation progressive en data science, optimisation et IA appliquée à l'industrie.
+      </div>
+      <div class="tl-tags"><span class="tl-tag">Data Science</span><span class="tl-tag">Mathématiques</span><span class="tl-tag">Éco-conception</span><span class="tl-tag">Management</span></div>
+    </div>
+
+    <div class="tl-item reveal d2 minor">
+      <div class="tl-dot"></div>
+      <div class="tl-period" data-fr="Été 2024 · Stage" data-en="Summer 2024 · Internship">Été 2024 · Stage</div>
+      <div class="tl-title" data-fr="Stage Amélioration Continue — AYA BRIQ" data-en="Continuous Improvement Intern — AYA BRIQ">Stage Amélioration Continue — AYA BRIQ</div>
+      <div class="tl-school" data-fr="Service Production · Maroc" data-en="Production Dept · Morocco">Service Production · Maroc</div>
+      <div class="tl-desc"
+           data-fr="Analyse des performances industrielles (TRS/OEE), déploiement des outils Lean (5S, SMED, AMDEC) et optimisation des flux de production."
+           data-en="Industrial performance analysis (OEE), Lean tools deployment (5S, SMED, FMEA), and production flow optimisation.">
+        Analyse des performances industrielles (TRS/OEE), déploiement des outils Lean (5S, SMED, AMDEC) et optimisation des flux de production.
+      </div>
+      <div class="tl-tags"><span class="tl-tag">Lean</span><span class="tl-tag">5S / SMED</span><span class="tl-tag">TRS / OEE</span></div>
+    </div>
+
+    <div class="tl-item reveal d3 minor">
+      <div class="tl-dot"></div>
+      <div class="tl-period" data-fr="Mars 2025 · Winter School" data-en="March 2025 · Winter School">Mars 2025 · Winter School</div>
+      <div class="tl-title">Next Generation AI &amp; Economic Applications</div>
+      <div class="tl-school" data-fr="Université Mohammed VI Polytechnic · Maroc" data-en="University Mohammed VI Polytechnic · Morocco">Université Mohammed VI Polytechnic · Maroc</div>
+      <div class="tl-desc"
+           data-fr="Semaine intensive avec des experts internationaux sur les applications de l'IA nouvelle génération aux enjeux économiques."
+           data-en="Intensive week with international experts on next-generation AI applications to economic challenges.">
+        Semaine intensive avec des experts internationaux sur les applications de l'IA nouvelle génération aux enjeux économiques.
+      </div>
+      <div class="tl-tags"><span class="tl-tag">NLP</span><span class="tl-tag">Predictive Analytics</span><span class="tl-tag">AI &amp; Economics</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- LANGUAGES -->
+<section id="languages" style="background:var(--dark)">
+  <div class="sec-kicker reveal" style="color:var(--pink-soft)" data-fr="Langues" data-en="Languages">Langues</div>
+  <div class="sec-title reveal" style="color:var(--white)">
+    <span data-fr="Je parle <em>3 langues</em>" data-en="I speak <em>3 languages</em>">Je parle <em>3 langues</em></span>
+  </div>
+  <div class="lang-grid">
+    <div class="lang-card reveal">
+      <span class="lang-flag">🇫🇷</span>
+      <div class="lang-card-name">Français</div>
+      <div class="lang-card-level" data-fr="Niveau C1 — Courant" data-en="Level C1 — Fluent">Niveau C1 — Courant</div>
+      <div class="lang-card-desc" data-fr="Langue principale de travail. Rédaction professionnelle, présentations, communication avec des équipes françaises et internationales." data-en="Primary working language. Professional writing, presentations, and communication with French and international teams.">Langue principale de travail. Rédaction professionnelle, présentations, communication avec des équipes françaises et internationales.</div>
+      <div class="lang-dots"><div class="ldot filled"></div><div class="ldot filled"></div><div class="ldot filled"></div><div class="ldot filled"></div><div class="ldot filled"></div></div>
+    </div>
+    <div class="lang-card reveal d1">
+      <span class="lang-flag">🇬🇧</span>
+      <div class="lang-card-name">English</div>
+      <div class="lang-card-level" data-fr="Niveau B2 — Avancé" data-en="Level B2 — Advanced">Niveau B2 — Avancé</div>
+      <div class="lang-card-desc" data-fr="Utilisé quotidiennement dans mes cours à CentraleSupélec, mes projets académiques et mes certifications IBM et Google." data-en="Used daily in my CentraleSupélec coursework, academic projects, and IBM and Google certifications.">Utilisé quotidiennement dans mes cours à CentraleSupélec, mes projets académiques et mes certifications IBM et Google.</div>
+      <div class="lang-dots"><div class="ldot filled"></div><div class="ldot filled"></div><div class="ldot filled"></div><div class="ldot filled"></div><div class="ldot"></div></div>
+    </div>
+    <div class="lang-card reveal d2">
+      <span class="lang-flag">🇲🇦</span>
+      <div class="lang-card-name">عربي</div>
+      <div class="lang-card-level" data-fr="Langue maternelle" data-en="Native language">Langue maternelle</div>
+      <div class="lang-card-desc" data-fr="Arabe dialectal marocain et arabe classique, lu, écrit et parlé parfaitement depuis l'enfance." data-en="Moroccan colloquial and Classical Arabic, read, written, and spoken perfectly since childhood.">Arabe dialectal marocain et arabe classique, lu, écrit et parlé parfaitement depuis l'enfance.</div>
+      <div class="lang-dots"><div class="ldot filled"></div><div class="ldot filled"></div><div class="ldot filled"></div><div class="ldot filled"></div><div class="ldot filled"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="sec-kicker reveal" data-fr="Réalisations" data-en="Work">Réalisations</div>
+  <div class="sec-title reveal">
+    <span data-fr="Mes <em>projets</em><br><span class='outline'>en détail</span>" data-en="My <em>projects</em><br><span class='outline'>in detail</span>">Mes <em>projets</em><br><span class="outline">en détail</span></span>
+  </div>
+  <div class="proj-list">
+
+    <div class="proj-item reveal">
+      <div class="proj-n">01</div>
+      <div class="proj-body">
+        <div class="proj-cat-tag" data-fr="Data Analytics · Banque Mondiale" data-en="Data Analytics · World Bank">Data Analytics · Banque Mondiale</div>
+        <div class="proj-name" data-fr="Tableau de Bord Performance Logistique (LPI)" data-en="Logistics Performance Dashboard (LPI)">Tableau de Bord Performance Logistique (LPI)</div>
+        <div class="proj-detail"
+             data-fr="À partir d'un grand dataset de la Banque Mondiale, j'ai nettoyé, structuré et analysé des données logistiques couvrant des dizaines de pays. Conception d'un tableau de bord interactif Power BI avec KPIs dynamiques, filtres régionaux et visualisations comparatives pour identifier les leviers d'amélioration de la supply chain mondiale."
+             data-en="From a large World Bank dataset, I cleaned, structured, and analysed logistics performance data covering dozens of countries. Designed an interactive Power BI dashboard with dynamic KPIs, regional filters, and comparative visualisations to identify global supply chain improvement levers.">
+          À partir d'un grand dataset de la Banque Mondiale, j'ai nettoyé, structuré et analysé des données logistiques couvrant des dizaines de pays. Conception d'un tableau de bord interactif Power BI avec KPIs dynamiques, filtres régionaux et visualisations comparatives.
+        </div>
+        <div class="proj-pills"><span class="ppill">Power BI</span><span class="ppill">Excel</span><span class="ppill">Data Cleaning</span><span class="ppill">KPIs</span><span class="ppill">Reporting</span></div>
+      </div>
+      <div class="proj-arrow-icon">→</div>
+    </div>
+
+    <div class="proj-item reveal">
+      <div class="proj-n">02</div>
+      <div class="proj-body">
+        <div class="proj-cat-tag" data-fr="Recherche Opérationnelle · Air France" data-en="Operations Research · Air France">Recherche Opérationnelle · Air France</div>
+        <div class="proj-name" data-fr="Optimisation de Flotte — Tail Assignment" data-en="Fleet Optimisation — Tail Assignment">Optimisation de Flotte — Tail Assignment</div>
+        <div class="proj-detail"
+             data-fr="Modélisation du problème d'affectation de flotte pour Air France sous forme de MILP. Planification statique et dynamique des appareils sur les rotations pour minimiser la consommation de carburant tout en respectant les contraintes opérationnelles. Implémentation avec Gurobi en Python."
+             data-en="Modelled a fleet assignment problem for Air France as a Mixed Integer Linear Program (MILP). Static and dynamic aircraft scheduling across rotations to minimise fuel consumption while satisfying operational constraints. Implemented with Gurobi in Python.">
+          Modélisation du problème d'affectation de flotte pour Air France sous forme de MILP. Planification statique et dynamique des appareils pour minimiser la consommation de carburant. Implémentation avec Gurobi en Python.
+        </div>
+        <div class="proj-pills"><span class="ppill">Gurobi</span><span class="ppill">Python</span><span class="ppill">MILP</span><span class="ppill">Optimisation</span></div>
+      </div>
+      <div class="proj-arrow-icon">→</div>
+    </div>
+
+    <div class="proj-item reveal">
+      <div class="proj-n">03</div>
+      <div class="proj-body">
+        <div class="proj-cat-tag" data-fr="Innovation Digitale · Royal Air Maroc" data-en="Digital Innovation · Royal Air Maroc">Innovation Digitale · Royal Air Maroc</div>
+        <div class="proj-name">RAM Green Connect</div>
+        <div class="proj-detail"
+             data-fr="Conception d'une plateforme éco-responsable pour Royal Air Maroc : calculateur d'empreinte carbone en temps réel, tableau de bord de durabilité et outils de prise de décision environnementale. Architecture plateforme, agrégation de données opérationnelles et reporting KPIs aux parties prenantes."
+             data-en="Designed an eco-responsible platform for Royal Air Maroc: real-time carbon footprint calculator, sustainability dashboard, and environmental decision tools. Platform architecture, operational data aggregation, and KPI reporting to stakeholders.">
+          Conception d'une plateforme éco-responsable pour Royal Air Maroc : calculateur d'empreinte carbone, tableau de bord de durabilité et outils décisionnels environnementaux.
+        </div>
+        <div class="proj-pills"><span class="ppill">Dashboard</span><span class="ppill">Sustainability</span><span class="ppill">KPIs</span><span class="ppill">Project Mgmt</span></div>
+      </div>
+      <div class="proj-arrow-icon">→</div>
+    </div>
+
+    <div class="proj-item reveal">
+      <div class="proj-n">04</div>
+      <div class="proj-body">
+        <div class="proj-cat-tag" data-fr="Machine Learning · CentraleSupélec" data-en="Machine Learning · CentraleSupélec">Machine Learning · CentraleSupélec</div>
+        <div class="proj-name" data-fr="Classification de Nuages de Points RADAR" data-en="RADAR Point Cloud Classification">Classification de Nuages de Points RADAR</div>
+        <div class="proj-detail"
+             data-fr="Développement de réseaux de neurones pour la classification de nuages de points RADAR acquis sur un capteur embarqué TI IWR6843. Prétraitement 3D, architecture PointNet-like, entraînement et évaluation comparative sur différentes architectures de deep learning."
+             data-en="Developed neural networks for classifying RADAR point clouds from a TI IWR6843 embedded sensor. 3D preprocessing, PointNet-like architecture design, training and comparative evaluation across deep learning models.">
+          Développement de réseaux de neurones pour la classification de nuages de points RADAR (TI IWR6843). Architecture PointNet-like, prétraitement 3D et évaluation comparative.
+        </div>
+        <div class="proj-pills"><span class="ppill">Python</span><span class="ppill">Deep Learning</span><span class="ppill">Computer Vision</span><span class="ppill">3D Data</span></div>
+      </div>
+      <div class="proj-arrow-icon">→</div>
+    </div>
+
+    <div class="proj-item reveal">
+      <div class="proj-n">05</div>
+      <div class="proj-body">
+        <div class="proj-cat-tag" data-fr="Lean Manufacturing · AYA BRIQ" data-en="Lean Manufacturing · AYA BRIQ">Lean Manufacturing · AYA BRIQ</div>
+        <div class="proj-name" data-fr="Amélioration Continue — Service Production" data-en="Continuous Improvement — Production">Amélioration Continue — Service Production</div>
+        <div class="proj-detail"
+             data-fr="Analyse des performances industrielles (TRS/OEE) et application des outils Lean (5S, SMED, AMDEC) pour résoudre des goulots d'étranglement critiques. Construction de tableaux de bord et communication des recommandations à la direction."
+             data-en="Industrial performance analysis (OEE) and Lean tools application (5S, SMED, FMEA) to address critical bottlenecks. Dashboard construction and recommendation reporting to management.">
+          Analyse des performances industrielles (TRS/OEE) et application des outils Lean (5S, SMED, AMDEC) pour résoudre des goulots d'étranglement critiques.
+        </div>
+        <div class="proj-pills"><span class="ppill">5S / SMED</span><span class="ppill">AMDEC</span><span class="ppill">TRS / OEE</span><span class="ppill">Lean</span></div>
+      </div>
+      <div class="proj-arrow-icon">→</div>
+    </div>
+
+    <div class="proj-item reveal">
+      <div class="proj-n">06</div>
+      <div class="proj-body">
+        <div class="proj-cat-tag" data-fr="Éco-conception · Centrale Casablanca" data-en="Eco-design · Centrale Casablanca">Éco-conception · Centrale Casablanca</div>
+        <div class="proj-name" data-fr="Système de Méthanisation Intelligent" data-en="Intelligent Biogas System">Système de Méthanisation Intelligent</div>
+        <div class="proj-detail"
+             data-fr="Conception d'un système de valorisation des déchets organiques en biogaz. Analyse du cycle de vie, étude de faisabilité technico-économique et évaluation de l'impact environnemental. Solution durable et scalable pour la gestion des déchets en milieu urbain."
+             data-en="Designed an organic waste-to-biogas system. Lifecycle analysis, techno-economic feasibility study, and environmental impact assessment. A sustainable, scalable urban waste management solution.">
+          Conception d'un système de valorisation des déchets organiques en biogaz. Analyse du cycle de vie, faisabilité technico-économique et évaluation d'impact environnemental.
+        </div>
+        <div class="proj-pills"><span class="ppill">Éco-conception</span><span class="ppill">Cycle de vie</span><span class="ppill">Biogaz</span><span class="ppill">Innovation</span></div>
+      </div>
+      <div class="proj-arrow-icon">→</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="sec-kicker reveal" data-fr="Accréditations" data-en="Credentials">Accréditations</div>
+  <div class="sec-title reveal"><em>Certifications</em></div>
+
+  <div class="certs-masonry">
+
+    <!-- SQL CERTIFICATE -->
+    <div class="cert-c reveal">
+      <div class="cert-c-head">
+        <div class="cert-c-logo">IBM</div>
+        <div class="cert-c-meta">
+          <div class="cert-c-issuer">IBM</div>
+          <div class="cert-c-date">Janvier 2026</div>
+        </div>
+      </div>
+
+      <a href="https://coursera.org/share/8d4124d6b2c676154ca066ffdbabd1ba" target="_blank">
+        <div class="cert-c-title">Databases and SQL for Data Science with Python</div>
+      </a>
+
+      <div class="cert-c-desc" data-fr="Requêtes SQL avancées, jointures complexes, bases de données relationnelles et intégration Python pour la data science." data-en="Advanced SQL queries, complex joins, relational databases, and Python integration for data science.">
+        Requêtes SQL avancées, jointures complexes, bases de données relationnelles et intégration Python pour la data science.
+      </div>
+
+      <div class="cert-c-id">ID : LAPDQFFXSGZ2</div>
+    </div>
+
+
+    <!-- COMPUTER VISION -->
+    <div class="cert-c reveal d1">
+      <div class="cert-c-head">
+        <div class="cert-c-logo">IBM</div>
+        <div class="cert-c-meta">
+          <div class="cert-c-issuer">IBM</div>
+          <div class="cert-c-date">Août 2025</div>
+        </div>
+      </div>
+
+      <a href="https://coursera.org/share/0fd713f14f20c829478771c85872a318" target="_blank">
+        <div class="cert-c-title" data-fr="Introduction à la vision par ordinateur et au traitement de l'image" data-en="Introduction to Computer Vision and Image Processing">
+          Introduction à la vision par ordinateur et au traitement de l'image
+        </div>
+      </a>
+
+      <div class="cert-c-desc" data-fr="CNN, détection d'objets, traitement d'image et applications industrielles de la computer vision." data-en="CNN, object detection, image processing, and industrial computer vision applications.">
+        CNN, détection d'objets, traitement d'image et applications industrielles de la computer vision.
+      </div>
+
+      <div class="cert-c-id">ID : 5BV8G8PHD2ST</div>
+    </div>
+
+
+    <!-- AI FOR EVERYONE -->
+    <div class="cert-c reveal">
+      <div class="cert-c-head">
+        <div class="cert-c-logo" style="font-size:.48rem;line-height:1.3">
+          Deep<br>Learning<br>.AI
+        </div>
+        <div class="cert-c-meta">
+          <div class="cert-c-issuer">DeepLearning.AI</div>
+          <div class="cert-c-date">Août 2025</div>
+        </div>
+      </div>
+
+      <a href="https://coursera.org/share/edeb839be33dc22ffae6d2b764e4797c" target="_blank">
+        <div class="cert-c-title" data-fr="L'IA pour tous" data-en="AI for Everyone">
+          L'IA pour tous
+        </div>
+      </a>
+
+      <div class="cert-c-desc" data-fr="Démystification de l'IA, applications concrètes en entreprise, enjeux stratégiques et éthiques pour les décideurs." data-en="Demystifying AI, practical business applications, strategic and ethical challenges for decision-makers.">
+        Démystification de l'IA, applications concrètes en entreprise, enjeux stratégiques et éthiques.
+      </div>
+
+      <div class="cert-c-id">ID : USCFDM3JVBF6</div>
+    </div>
+
+
+    <!-- GOOGLE PROJECT MANAGEMENT -->
+    <div class="cert-c reveal d1">
+      <div class="cert-c-head">
+        <div class="cert-c-logo" style="font-size:1.4rem;font-weight:800;color:#4285f4;background:rgba(66,133,244,.1)">
+          G
+        </div>
+        <div class="cert-c-meta">
+          <div class="cert-c-issuer">Google</div>
+          <div class="cert-c-date">Janvier 2025</div>
+        </div>
+      </div>
+
+      <a href="https://coursera.org/share/21299a3518feb59b00634b6e38c04dce" target="_blank">
+        <div class="cert-c-title" data-fr="Spécialisation Google Project Management" data-en="Google Project Management Specialisation">
+          Spécialisation Google Project Management
+        </div>
+      </a>
+
+      <div class="cert-c-desc" data-fr="Gestion de projets traditionnelle et agile (Scrum), planification, risques, budgets et parties prenantes." data-en="Traditional and agile (Scrum) project management, planning, risk, budget, and stakeholder management.">
+        Gestion de projets traditionnelle et agile (Scrum), planification, risques, budgets et parties prenantes.
+      </div>
+
+      <div class="cert-c-id">ID : DKFV5IUFJ91Q</div>
+    </div>
+
+
+    <!-- WINTER SCHOOL -->
+    <div class="cert-c reveal" style="grid-column:1/-1">
+      <div class="cert-c-head">
+        <div class="cert-c-logo">UM6P</div>
+        <div class="cert-c-meta">
+          <div class="cert-c-issuer">University Mohammed VI Polytechnic</div>
+          <div class="cert-c-date" data-fr="Mars 2025 · Benguerir, Maroc" data-en="March 2025 · Benguerir, Morocco">
+            Mars 2025 · Benguerir, Maroc
+          </div>
+        </div>
+      </div>
+
+      <div class="cert-c-title">
+        Winter School — Next Generation AI & Economic Applications
+      </div>
+
+      <div class="cert-c-desc" data-fr="Semaine intensive sur les applications de l'IA nouvelle génération aux enjeux économiques." data-en="Intensive week on next-gen AI economic applications.">
+        Semaine intensive sur les applications de l'IA nouvelle génération aux enjeux économiques.
+      </div>
+
+      <img src="winter-school.jpg" style="width:100%;border-radius:12px;margin-top:15px;">
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" style="background:var(--pink-ultra)">
+  <div class="sec-kicker reveal" data-fr="Expertise" data-en="Expertise">Expertise</div>
+  <div class="sec-title reveal"><span data-fr="Mes <em>compétences</em>" data-en="My <em>skills</em>">Mes <em>compétences</em></span></div>
+  <div class="skills-inner">
+    <div class="sg reveal">
+      <span class="sg-icon">📊</span>
+      <div class="sg-title" data-fr="Data &amp; Visualisation" data-en="Data &amp; Visualisation">Data &amp; Visualisation</div>
+      <div class="sg-pills">
+        <span class="sgp sgp-f">Power BI</span><span class="sgp sgp-f">Excel Avancé</span><span class="sgp sgp-f">Python</span><span class="sgp sgp-f">SQL</span><span class="sgp sgp-m">R</span><span class="sgp sgp-m">Matlab</span>
+      </div>
+    </div>
+    <div class="sg reveal d1">
+      <span class="sg-icon">🧠</span>
+      <div class="sg-title" data-fr="IA &amp; Optimisation" data-en="AI &amp; Optimisation">IA &amp; Optimisation</div>
+      <div class="sg-pills">
+        <span class="sgp sgp-f">Machine Learning</span><span class="sgp sgp-f">Deep Learning</span><span class="sgp sgp-m">Computer Vision</span><span class="sgp sgp-m">MILP / Gurobi</span><span class="sgp sgp-l">Decision Support</span>
+      </div>
+    </div>
+    <div class="sg reveal d2">
+      <span class="sg-icon">⚙️</span>
+      <div class="sg-title" data-fr="Qualité &amp; Gestion" data-en="Quality &amp; Management">Qualité &amp; Gestion</div>
+      <div class="sg-pills">
+        <span class="sgp sgp-f">Lean 5S/SMED</span><span class="sgp sgp-f">AMDEC</span><span class="sgp sgp-f">KPIs / TRS</span><span class="sgp sgp-m">Gestion de projets</span><span class="sgp sgp-l">Agile / Scrum</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-glow"></div>
+  <div class="contact-inner">
+    <div class="contact-kicker reveal" data-fr="Disponible · Septembre 2026" data-en="Available · September 2026">Disponible · Septembre 2026</div>
+    <div class="contact-h reveal">
+      <span data-fr="Travaillons<br><em>ensemble</em>" data-en="Let's work<br><em>together</em>">Travaillons<br><em>ensemble</em></span>
+    </div>
+    <p class="contact-sub reveal"
+       data-fr="Ouverte aux stages de 6 mois dans l'analyse de données, la qualité, le conseil stratégique ou l'optimisation industrielle."
+       data-en="Open to 6-month internships in data analytics, quality engineering, strategic consulting, or industrial optimisation.">
+      Ouverte aux stages de 6 mois dans l'analyse de données, la qualité, le conseil stratégique ou l'optimisation industrielle.
+    </p>
+    <div class="contact-row reveal">
+      <a href="mailto:meriem.mellouki@student-cs.fr" class="cl">
+        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+        Email
+      </a>
+      <a href="https://www.linkedin.com/in/meriem-mellouki-b5796231b" target="_blank" rel="noopener" class="cl">
+        <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="tel:+33754095830" class="cl">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.39 19a19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 3 4.18 2 2 0 0 1 4.99 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L9.1 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        +33 7 54 09 58 30
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="flogo">Meriem Mellouki</div>
+  <div class="fcopy">© 2026 — <span data-fr="Tous droits réservés" data-en="All rights reserved">Tous droits réservés</span></div>
+</footer>
+
+<script>
+// ── CURSOR ──
+const dot=document.getElementById('dot'),ring=document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px'});
+(function loop(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop)})();
+document.querySelectorAll('a,button,.proj-item,.cert-c,.sg,.lang-card,.lang-badge,.tl-item,.about-stat,.about-val').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('hv'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('hv'));
+});
+
+// ── NAV SCROLL ──
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('s',scrollY>60),{passive:true});
+
+// ── BACK TO TOP ──
+const btt=document.getElementById('btt');
+window.addEventListener('scroll',()=>btt.classList.toggle('vis',scrollY>400),{passive:true});
+btt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+// ── REVEAL ON SCROLL ──
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on')});
+},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// ── ACTIVE NAV LINK ──
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.nlinks a');
+const obs2=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(a=>a.classList.remove('active'));
+      const l=document.querySelector('.nlinks a[href="#'+e.target.id+'"]');
+      if(l)l.classList.add('active');
+    }
+  });
+},{threshold:.3});
+sections.forEach(s=>obs2.observe(s));
+
+// ── LANGUAGE SWITCHER ──
+let lang='fr';
+const btnFr=document.getElementById('btn-fr');
+const btnEn=document.getElementById('btn-en');
+
+function setLang(l){
+  lang=l;
+  document.documentElement.lang=l;
+  btnFr.classList.toggle('active',l==='fr');
+  btnEn.classList.toggle('active',l==='en');
+  // Update every element that has data-fr AND data-en
+  document.querySelectorAll('[data-fr][data-en]').forEach(el=>{
+    el.innerHTML=el.getAttribute('data-'+l);
+  });
+}
+
+btnFr.addEventListener('click',()=>setLang('fr'));
+btnEn.addEventListener('click',()=>setLang('en'));
+
+// Auto-detect browser language
+const bl=(navigator.language||'').toLowerCase();
+if(bl.startsWith('en')) setLang('en');
+</script>
+</body>
+</html>
