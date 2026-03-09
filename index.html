@@ -164,7 +164,7 @@ section{padding:7rem 5rem}
 .ppill{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .75rem;background:var(--pink-pale);color:var(--pink);border-radius:100px;font-weight:500}
 .proj-arrow-icon{width:44px;height:44px;border:1.5px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gray);font-size:.9rem;transition:all .3s;flex-shrink:0}
 
-/* CERTIFICATIONS */
+/* CERTIFICATIONS */ 
 #certifications{background:var(--cream)}
 .certs-masonry{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
 .cert-c{padding:2.2rem 2.5rem;border:1.5px solid var(--border);border-radius:16px;transition:all .3s;position:relative;overflow:hidden;background:var(--white)}
@@ -324,19 +324,17 @@ footer{background:#0d0007;padding:2rem 5rem;display:flex;justify-content:space-b
   </div>
 </section>
 
-<!-- ABOUT -->
+
+<!-- ══════════ ABOUT ══════════ -->
 <section id="about">
   <div class="sec-kicker reveal" data-fr="À propos" data-en="About me">À propos</div>
-
   <div class="sec-title reveal">
-    <span data-fr="Qui <em>suis-je</em>&nbsp;?" data-en="Who <em>am I</em>?">
-      Qui <em>suis-je</em>&nbsp;?
-    </span>
+    <span data-fr="Qui <em>suis-je</em>&nbsp;?" data-en="Who <em>am I</em>?">Qui <em>suis-je</em>&nbsp;?</span>
   </div>
 
   <div class="about-grid">
+    <!-- LEFT -->
     <div class="about-left">
-
       <div class="about-tagline reveal"
            data-fr="Donnée. Rigueur.<br><em>Impact.</em>"
            data-en="Data. Rigour.<br><em>Impact.</em>">
@@ -346,31 +344,21 @@ footer{background:#0d0007;padding:2rem 5rem;display:flex;justify-content:space-b
       <p class="about-text reveal"
          data-fr="Je suis <strong>Meriem Mellouki</strong>, élève-ingénieure généraliste en double cursus entre <strong>Centrale Casablanca</strong> et <strong>CentraleSupélec Paris-Saclay</strong>. Passionnée par la jonction entre la rigueur mathématique et les enjeux concrets du terrain, je me spécialise dans la data science, l'optimisation et l'intelligence artificielle appliquées à l'industrie."
          data-en="I am <strong>Meriem Mellouki</strong>, a Moroccan engineering student in a dual degree programme between <strong>Centrale Casablanca</strong> and <strong>CentraleSupélec Paris-Saclay</strong>. Passionate about bridging mathematical rigour with real-world challenges, I specialise in data science, optimisation, and AI applied to industry.">
-         
         Je suis <strong>Meriem Mellouki</strong>, élève-ingénieure généraliste en double cursus entre <strong>Centrale Casablanca</strong> et <strong>CentraleSupélec Paris-Saclay</strong>. Passionnée par la jonction entre la rigueur mathématique et les enjeux concrets du terrain, je me spécialise dans la data science, l'optimisation et l'intelligence artificielle appliquées à l'industrie.
-
       </p>
 
       <p class="about-text reveal"
          data-fr="Mon parcours m'a amenée à travailler sur des projets variés : optimisation de flotte aérienne avec <strong>Gurobi</strong>, classification de nuages de points RADAR par <strong>deep learning</strong>, construction de dashboards <strong>Power BI</strong> pour la Banque mondiale, et amélioration continue en <strong>usine</strong>. J'apprécie la diversité des problèmes et la satisfaction de développer des solutions concrètes et actionnables."
          data-en="My journey has taken me through diverse projects: airline fleet optimisation with <strong>Gurobi</strong>, RADAR point cloud classification using <strong>deep learning</strong>, <strong>Power BI</strong> dashboard design for the World Bank, and <strong>shop-floor</strong> continuous improvement. I thrive on varied problems and the satisfaction of developing actionable solutions.">
-
-        Mon parcours m'a amenée à travailler sur des projets variés : optimisation de flotte aérienne avec <strong>Gurobi</strong>, classification de nuages de points RADAR par <strong>deep learning</strong>, construction de dashboards <strong>Power BI</strong> pour la Banque mondiale, et amélioration continue en <strong>usine</strong>. J'apprécie la diversité des problèmes et la satisfaction de développer des solutions concrètes et actionnables.
-
+        Mon parcours m'a amenée à travailler sur des projets variés : optimisation de flotte aérienne avec <strong>Gurobi</strong>, classification de nuages de points RADAR par <strong>deep learning</strong>, construction de dashboards <strong>Power BI</strong> pour la Banque mondiale, et amélioration continue en <strong>usine</strong>.
       </p>
 
       <p class="about-text reveal"
          data-fr="Je suis actuellement à la recherche d'un <strong>stage de 6 mois</strong> à partir de juillet 2026, dans les domaines de l'analyse de données, du conseil stratégique, de la qualité ou de l'optimisation industrielle — idéalement dans un environnement international stimulant."
          data-en="I am currently seeking a <strong>6-month internship</strong> starting in July 2026 in data analytics, strategic consulting, quality engineering, or industrial optimisation — ideally in a stimulating international environment.">
-
         Je suis actuellement à la recherche d'un <strong>stage de 6 mois</strong> à partir de juillet 2026, dans les domaines de l'analyse de données, du conseil stratégique, de la qualité ou de l'optimisation industrielle — idéalement dans un environnement international stimulant.
-
       </p>
 
-    </div>
-  </div>
-</section>
-     
       <div class="about-values reveal">
         <div class="about-val">
           <span class="about-val-icon">🎯</span>
@@ -394,7 +382,9 @@ footer{background:#0d0007;padding:2rem 5rem;display:flex;justify-content:space-b
           </div>
         </div>
       </div>
-    </div>
+    </div><!-- /about-left -->
+
+    <!-- RIGHT -->
     <div class="about-right">
       <div class="about-stats reveal">
         <div class="about-stat">
@@ -414,6 +404,7 @@ footer{background:#0d0007;padding:2rem 5rem;display:flex;justify-content:space-b
           <div class="about-stat-label" data-fr="Grandes écoles" data-en="Top engineering schools">Grandes écoles</div>
         </div>
       </div>
+
       <div class="about-quote reveal d1">
         <div class="about-quote-text"
              data-fr="Les données ne parlent pas d'elles-mêmes. Elles ont besoin d'un ingénieur pour leur donner du sens — et d'une vision pour en faire quelque chose."
@@ -422,9 +413,9 @@ footer{background:#0d0007;padding:2rem 5rem;display:flex;justify-content:space-b
         </div>
         <div class="about-quote-author">— Meriem Mellouki</div>
       </div>
-    </div>
-  </div>
-</section>
+    </div><!-- /about-right -->
+  </div><!-- /about-grid -->
+</section><!-- /about -->
 
 <!-- FORMATION -->
 <section id="formation">
